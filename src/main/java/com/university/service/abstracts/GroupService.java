@@ -9,4 +9,5 @@ public interface GroupService {
 
     Group getByName(String name);
 
+    void delete(Group group);
 }

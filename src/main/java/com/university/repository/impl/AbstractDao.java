@@ -50,13 +50,13 @@ public abstract class AbstractDao<PK extends Serializable, T> implements Generic
         return mongoTemplate.findOne(query, persistentClass);
     }
 
-    public void deleteByKey(PK pk) {
+    public void delete(PK pk) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(pk));
         mongoTemplate.remove(query, persistentClass);
     }
 
-    public void deleteByKey(T entity) {
+    public void delete(T entity) {
         mongoTemplate.remove(entity);
     }
 }

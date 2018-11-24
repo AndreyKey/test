@@ -6,8 +6,10 @@ import com.university.repository.abstracts.GroupDao;
 import com.university.repository.abstracts.StudentDao;
 import com.university.service.abstracts.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,9 +28,14 @@ public class GroupServiceImpl implements GroupService {
         Student student = studentDao.getByName(studentName);
         Group group = groupDao.getByName(groupName);
         List<Student> studentsList = group.getStudents();
+        if(studentsList==null) {
+            studentsList = new ArrayList<>();
+        }
         if(!studentsList.contains(student)) {
             studentsList.add(student);
         }
+        group.setStudents(studentsList);
+        groupDao.update(group);
     }
 
     @Override
@@ -39,5 +46,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group getByName(String name) {
         return groupDao.getByName(name);
+    }
+
+    @Override
+    public void delete(Group group) {
+        groupDao.delete(group);
     }
 }

@@ -31,4 +31,9 @@ public class StudentServiceImpl implements StudentService {
     public void add(Student student) {
         studentDao.persist(student);
     }
+
+    @Override
+    public void delete(Student student) {
+        studentDao.delete(student);
+    }
 }
